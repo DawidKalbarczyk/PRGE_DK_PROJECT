@@ -4,6 +4,7 @@ LABEL maintainer="Dawid Kalbarczyk WIG23AX1S0 Nr:85222"
 WORKDIR app
 
 COPY config/node/frontend/package.json .
+COPY config/node/frontend/package-lock.json .
 RUN npm install
 
 COPY config/node/frontend .

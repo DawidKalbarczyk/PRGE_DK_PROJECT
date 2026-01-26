@@ -2,6 +2,7 @@ FROM node:24 AS build
 WORKDIR /app
 
 COPY config/node/frontend/package.json .
+COPY config/node/frontend/package-lock.json .
 RUN npm install
 COPY config/node/frontend .
 

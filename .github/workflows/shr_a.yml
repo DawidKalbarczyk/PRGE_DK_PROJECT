@@ -42,13 +42,13 @@ jobs:
       - name: Kopiuj dane z poprzedniego środowiska
         if: github.ref_name == 'env-qa' || github.ref_name =='env-test' || github.ref_name == 'main'
         run: |
-          if [ "${{github.ref_name}} == "env-test" ]; then
+          if [ "${{github.ref_name}}" == "env-test" ]; then
             echo "Kopiowanie z env-dev do env-test"
             docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm dev-to-test
-          elif [ "${{github.ref_name}} == "env-qa" ]; then
+          elif [ "${{github.ref_name}}" == "env-qa" ]; then
             echo "Kopiowanie z env-test do env-qa"
             docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm test-to-qa
-          elif [ "${{github.ref_name}} == "main" ]; then
+          elif [ "${{github.ref_name}}" == "main" ]; then
             echo "Kopiowanie z env-qa do main"
             docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm qa-to-main
 
