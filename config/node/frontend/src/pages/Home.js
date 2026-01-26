@@ -8,7 +8,7 @@ function Home(props) {
         <div className="home">
             <h1 className="home_title">GEOPORTAL</h1>
             <Typography className="home_subtitle">
-                Geoportal tematyczny poświęcony danym przestrzennym,
+                TEST
 
             </Typography>
 
