@@ -1,0 +1,66 @@
+name: build and push and deploy
+on:
+  push:
+    branches:
+      - env-test
+      - env-qa
+      - main
+
+
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  build-and-push:
+    name: Build & Push
+    runs-on:
+      - self-hosted
+
+    environment: ${{github.ref_name}}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Print
+        run: echo 'witaj'
+
+      - name: Utwórz katalog danych dla środowiska
+        run: |
+          mkdir -p .tmp/data-${{github.ref_name}}
+          echo "Utworzono katalog .tmp/data-${{github.ref_name}}"
+
+      - name: Utwórz plik .env dla docker-compose
+        run: |
+          echo "ENV_NAME=${{secrets.ENV_NAME}}" > .env
+          echo "POSTGRES_PORT=${{secrets.POSTGRES_PORT}}" >> .env
+          echo "GEOSERVER_PORT=${{secrets.GEOSERVER_PORT}}" >> .env
+          echo "POSTGRES_DB=${{secrets.POSTGRES_DB}}" >> .env
+          echo "POSTGRES_USER=${{secrets.POSTGRES_USER}}" >> .env
+          echo "POSTGRES_PASSWORD=${{secrets.POSTGRES_PASSWORD}}" >> .env
+
+      - name: Kopiuj dane z poprzedniego środowiska
+        if: github.ref_name == 'env-qa' || github.ref_name =='env-test' || github.ref_name == 'main'
+        run: |
+          if [ "${{github.ref_name}} == "env-test" ]; then
+            echo "Kopiowanie z env-dev do env-test"
+            docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm dev-to-test
+          elif [ "${{github.ref_name}} == "env-qa" ]; then
+            echo "Kopiowanie z env-test do env-qa"
+            docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm test-to-qa
+          elif [ "${{github.ref_name}} == "main" ]; then
+            echo "Kopiowanie z env-qa do main"
+            docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm qa-to-main
+
+      - name: Uruchom środowisko docker-compose
+        env:
+          ENV_NAME: ${{github.ref_name}}
+          POSTGRES_PORT: ${{secrets.POSTGRES_PORT}}
+          GEOSERVER_PORT: ${{secrets.GEOSERVER_PORT}}
+          FASTAPI_PORT: ${{secrets.FASTAPI_PORT}}
+          NGINX_PORT: ${{secrets.NGINX_PORT}}
+          POSTGRES_DB: ${{secrets.POSTGRES_DB}}
+          POSTGRES_USER: ${{secrets.POSTGRES_USER}}
+          POSTGRES_PASSWORD: ${{secrets.POSTGRES_PASSWORD}}
+        run: |
+          docker-compose -f ./docker-compose/docker-compose-remote.yml -p remote-dk-project up --build -d

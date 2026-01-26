@@ -1,0 +1,101 @@
+x-environment:
+  - &env-postgres-db POSTGRES_DB=${POSTGRES_DB}
+  - &env-postgres-user POSTGRES_USER=${POSTGRES_USER}
+  - &env-postgres-password POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+
+services:
+  postgis:
+    build:
+      context: ..
+      dockerfile: docker/postgis/Dockerfile
+    image: 'prge_dk_project_postgis'
+    container_name: 'prge_dk_project_postgis'
+    environment:
+      - *env-postgres-db
+      - *env-postgres-user
+      - *env-postgres-password
+    ports:
+      - 5443:5432
+    volumes:
+      - postgis-local-data:/var/lib/postgresql/data
+
+
+  geoserver:
+    build:
+      context: ..
+      dockerfile: docker/geoserver/Dockerfile
+    image: 'prge_dk_project_geoserver'
+    container_name: 'prge_dk_project_geoserver'
+    ports:
+      - 9000:8080
+    volumes:
+      - ../.tmp/data:/opt/geoserver_data
+      - ../.tmp/geoserver-config:/opt/geoserver/data_dir
+
+
+  fastapi:
+    build:
+      context: ..
+      dockerfile: docker/fastapi/Dockerfile
+    image: 'prge_dk_project_fastapi'
+    container_name: 'prge_dk_project_fastapi'
+    environment:
+      - *env-postgres-db
+      - *env-postgres-user
+      - *env-postgres-password
+    ports:
+      - 10000:10000
+
+
+  node:
+    build:
+      context: ..
+      dockerfile: docker/node/Dockerfile
+    image: 'prge_dk_project_node'
+    container_name: 'prge_dk_project_node'
+    volumes:
+      - ../config/node/frontend/src:/app/src
+      - ../config/node/frontend/package.json:/app/package.json
+      - ../config/node/frontend/package-lock.json:/app/package-lock.json
+    ports:
+      - 3000:3000
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - WATCHPACK_POLLING=true
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: docker/nginx/Dockerfile
+    image: 'prge_dk_project_nginx'
+    container_name: 'prge_dk_project_nginx'
+    ports:
+      - 8090:80
+
+  dev-to-test:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-dev_postgis-local-data:/from:ro
+      - prge_dk_project_env-test_postgis-local-data:/to
+
+  test-to-qa:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-dev_postgis-local-data:/from:ro
+      - prge_dk_project_env-qa_postgis-local-data:/to
+    command: sh -c "cp -a /from/. /to/"
+
+  qa-to-main:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-qa_postgis-local-data:/from:ro
+      - prge_dk_project_main_postgis-local-data:/to
+
+volumes:
+  postgis_dk_project_env-test_postgis-local-data:
+  postgis_dk_project_env-dev_postgis-local-data:
+  postgis_dk_project_env-qa_postgis-local-data:
+  postgis_dk_project_env-main_postgis-local-data:

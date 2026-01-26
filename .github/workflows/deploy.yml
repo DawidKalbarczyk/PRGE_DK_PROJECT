@@ -1,0 +1,52 @@
+name: Deploy prge-dk-project to github pages
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contest: read
+  pages: write
+  id-token: write
+  actions: read
+
+concurrency:
+  group: "pages"
+    cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: config/node/frontend
+    steps:
+      - name: Sprawdzenie
+        uses: actions/checkout@v4
+
+      - name: Przygotowanie Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: config/node/frontend/package-lock.json
+
+      - name: Tworzenie
+        run: npm run build
+
+      - name: Wrzuć artefakty
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: config/node/frontend/build
+
+    deploy:
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url}}
+      runs-on: ubuntu-latest
+      needs: build
+      steps:
+        - name: Wrzuć na github pages
+          id: deployment
+          uses: actions/deploy-pages@v4
+
