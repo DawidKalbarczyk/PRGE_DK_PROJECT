@@ -14,13 +14,22 @@ async def get_users():
     try:
         db_connection = connect_to_db(db_name=db_name, db_user=db_user, db_password=db_password)
 
-        sql_query = text("""select *from users;""")
+        sql_query= text("""select *from users;""")
+
         with db_connection.connect() as conn:
             result = conn.execute(sql_query)
-            users = [dict(row._mapping) for row in result.fetchall()]
+            users=[dict(row._mapping) for row in result]
 
-            return {"data": users}
+        return {"data": users}
     except Exception as e:
         print(f"Błąd podczas get_users: {e}")
 
         return {"error": str(e)}
+
+
+
+
+
+
+
+    return {"id": 1, "firstName": "Emily"}
