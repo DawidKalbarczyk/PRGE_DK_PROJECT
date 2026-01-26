@@ -1,4 +1,89 @@
-FROM ubuntu:latest
-LABEL authors="k_kal"
+x-environment:
+  - &env-postgres-db POSTGRES_DB=${POSTGRES_DB}
+  - &env-postgres-user POSTGRES_USER=${POSTGRES_USER}
+  - &env-postgres-password POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
 
-ENTRYPOINT ["top", "-b"]
+services:
+  postgis:
+    build:
+      context: ..
+      dockerfile: docker/postgis/Dockerfile
+    image: 'prge_dk_project_postgis'
+    container_name: prge_dk_project_postgis-${ENV_NAME}
+    environment:
+      - *env-postgres-db
+      - *env-postgres-user
+      - *env-postgres-password
+    ports:
+      - ${POSTGRES_PORT}:5432
+    volumes:
+      - postgis-local-data:/var/lib/postgresql/data
+
+
+  geoserver:
+    build:
+      context: ..
+      dockerfile: docker/geoserver/Dockerfile
+    image: 'prge_dk_project_geoserver'
+    container_name: prge_dk_project_geoserver-${ENV_NAME}
+    ports:
+      - ${GEOSERVER_PORT}:8080
+    volumes:
+      - geoserver-data:/opt/geoserver-data
+
+
+  fastapi:
+    build:
+      context: ..
+      dockerfile: docker/fastapi/Dockerfile
+    image: 'prge_dk_project_fastapi'
+    container_name: prge_dk_project_fastapi-${ENV_NAME}
+    environment:
+      - *env-postgres-db
+      - *env-postgres-user
+      - *env-postgres-password
+    ports:
+      - ${FASTAPI_PORT}:10000
+
+  nginx:
+    build:
+      context: ..
+      dockerfile: docker/nginx/Dockerfile
+    image: 'prge_dk_project_nginx'
+    container_name: prge_dk_project_nginx-${ENV_NAME}
+    ports:
+      - ${NGINX_PORT}:80
+
+  dev-to-test:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-dev_postgis-local-data:/from:ro
+      - prge_dk_project_env-test_postgis-local-data:/to
+    command: sh -c "cp -a /from/. /to/"
+
+  test-to-qa:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-dev_postgis-local-data:/from:ro
+      - prge_dk_project_env-qa_postgis-local-data:/to
+    command: sh -c "cp -a /from/. /to/"
+
+  qa-to-main:
+    image: alpine
+    profiles: ["copy"]
+    volumes:
+      - prge_dk_project_env-qa_postgis-local-data:/from:ro
+      - prge_dk_project_main_postgis-local-data:/to
+    command: sh -c "cp -a /from/. /to/"
+
+volumes:
+  geoserver-data:
+    name: prge_dk_project_${ENV_NAME}_geoserver-data
+  postgis-local-data:
+    name: prge_dk_project_${ENV_NAME}_postgis-local-data
+  prge_dk_project_env-test_postgis-local-data:
+  prge_dk_project_env-dev_postgis-local-data:
+  prge_dk_project_env-qa_postgis-local-data:
+  prge_dk_project_main_postgis-local-data:
