@@ -5,14 +5,15 @@ router_insert = APIRouter()
 
 from app.settings import db_name, db_user, db_password
 
-def connect_db(db_name: str, db_user: str, db_password: str):
+def connect_to_db(db_name: str, db_user: str, db_password: str):
     return create_engine(
         f"postgresql://{db_user}:{db_password}@postgis:5432/{db_name}"
+
     )
 
 class UserData(BaseModel):
     name: str
-    posts: str
+    posts: int
     location: str
 
 def scrappedGeom(data):
@@ -38,13 +39,15 @@ def scrappedGeom(data):
         return (latitude, longitude)
     else:
         print("Błąd w markerze!")
-        return (0, 0)
+        return (0,0)
+
 
 @router_insert.post("/insert_user")
 async def insert_user(user: UserData):
     try:
-        db_connection = connect_db(db_name=db_name, db_user=db_user, db_password=db_password)
-        coords = scrappedGeom(user_data.location)
+        db_connection = connect_to_db(db_name=db_name, db_user=db_user, db_password=db_password)
+
+        coords = scrappedGeom(data=user.location)
         latitude = float(coords[0])
         longitude = float(coords[1])
 
@@ -53,12 +56,13 @@ async def insert_user(user: UserData):
             "posts": user.posts,
             "location": user.location,
             "longitude": longitude,
-            "latitude": latitude
+            "latitude": latitude,
         }
+
 
         sql_query = text("""
                         insert into users (name, posts, geom, location) \
-                        VALUES (:name, :posts, ST_SetSRID(ST_MakePoint(:longitude, :latitude), 4326), :location; \
+                        VALUES (:name, :posts, ST_SetSRID(ST_MakePoint(:longitude, :latitude),4326), :location); \
                         """)
         with db_connection.connect() as conn:
             result = conn.execute(sql_query, params)
