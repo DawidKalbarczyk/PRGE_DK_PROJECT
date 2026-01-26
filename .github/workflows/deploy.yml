@@ -5,7 +5,7 @@ on:
       - main
 
 permissions:
-  contest: read
+  contents: read
   pages: write
   id-token: write
   actions: read
