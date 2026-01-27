@@ -35,7 +35,7 @@ function NewUser(props) {
                         style={{padding: 10}}
                         fullWidth
                         label="imie"
-                        value={userName.name}
+                        value={userName}
                         onChange={(e)=>setUserName(e.target.value)}
                     ></TextField>
                     <TextField
