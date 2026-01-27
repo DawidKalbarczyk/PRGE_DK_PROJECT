@@ -52,6 +52,15 @@ jobs:
             echo "Kopiowanie z env-qa do main"
             docker-compose -f ./docker-compose/docker-compose-remote.yml run --rm qa-to-main
           fi
+
+      - name: DEBUG - Sprawdź zmienne w kontenerze
+        run: |
+          echo "=== Sprawdzam zmienne środowiskowe w FastAPI ==="
+          docker exec prge_dk_project_fastapi-${{ github.ref_name }} env | grep POSTGRES
+
+          echo "=== Logi FastAPI ==="
+          docker logs prge_dk_project_fastapi-${{ github.ref_name }} 2>&1 | tail -30
+
       - name: Uruchom środowisko docker-compose
         env:
           ENV_NAME: ${{github.ref_name}}
