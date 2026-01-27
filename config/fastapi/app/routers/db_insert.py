@@ -5,12 +5,6 @@ router_insert = APIRouter()
 
 from app.settings import db_name, db_user, db_password
 
-print("=" * 50)
-print("CHECKING ENV VARIABLES:")
-print(f"POSTGRES_DB: {db_name}")
-print(f"POSTGRES_USER: {db_user}")
-print(f"POSTGRES_PASSWORD: {'SET' if db_password else 'NOT SET'}")
-print("=" * 50)
 
 def connect_to_db(db_name: str, db_user: str, db_password: str):
     return create_engine(
