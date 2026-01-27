@@ -52,6 +52,7 @@ async def insert_user(user: UserData):
         latitude = float(coords[0])
         longitude = float(coords[1])
 
+
         params = {
             "name": user.name,
             "posts": user.posts,
