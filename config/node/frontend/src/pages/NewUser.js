@@ -10,7 +10,7 @@ function NewUser(props) {
         console.log(userName, userLocation, userPosts)
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:10000/app/insert_user', {
+            const response = await fetch('/api/insert_user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
