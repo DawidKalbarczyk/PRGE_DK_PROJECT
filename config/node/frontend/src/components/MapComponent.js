@@ -22,13 +22,15 @@ function MapComponent(props) {
 
                 new TileLayer({
                     source: new TileWMS({
-                        url: "/geoserver/prge_project/wms?",
+                        url: "/geoserver/prge_project/wms",
                         params: {
                             'LAYERS': 'prge_project:Budynki_Warszawa',
-                            'TILED': true
+                            'TILED': true,
+                            'VERSION': '^1.1.0'
                         },
                         serverType: 'geoserver',
-                        transition: 300
+                        transition: 300,
+                        crossOrigin: 'anonymous'
                     })
                 }),
 
@@ -37,10 +39,12 @@ function MapComponent(props) {
                         url: "/geoserver/prge_project/wms",
                         params: {
                             'LAYERS': 'prge_project:users',  // Zmień 'prge' na swój workspace
-                            'TILED': true
+                            'TILED': true,
+                            'VERSION': '^1.1.0'
                         },
                         serverType: 'geoserver',
-                        transition: 300
+                        transition: 300,
+                        crossOrigin: 'anonymous'
                     })
                 })
             ],
