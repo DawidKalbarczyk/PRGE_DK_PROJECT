@@ -10,6 +10,7 @@ function NewUser(props) {
 
 
     const handleSubmit = async (e) => {
+        console.log("Wysyłam request do:", '/app/insert_user')
         console.log(userName, userLocation, userPosts)
         e.preventDefault();
         try {
