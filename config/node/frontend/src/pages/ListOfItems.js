@@ -6,6 +6,7 @@ function ListOfItems(props) {
     // UseEffect nasłuchuje jakąś rzecz i w przypadku jej zmiany wywołuje kod
     const [users, setUsers] = useState([]); //Tworzenie hooka, który może przechowywać coś w pamięci
 
+
     useEffect(() => {
         fetch('/app/get_users')
             .then(res => res.json())
