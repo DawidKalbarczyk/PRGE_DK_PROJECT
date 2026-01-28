@@ -11,17 +11,6 @@ function MapComponent(props) {
     const mapRef = useRef(null);
     useGeographic();
     useEffect(() => {
-        // Mapowanie portów nginx (8091-8093) na porty geoserver (9001-9003)
-        const portMapping = {
-            '8091': '9001',
-            '8092': '9002',
-            '8093': '9003'
-        };
-        
-        const currentPort = window.location.port;
-        const geoserverPort = portMapping[currentPort] || currentPort;
-        const geoserverUrl = `${window.location.protocol}//${window.location.hostname}:${geoserverPort}/geoserver/prge_project/wms?`;
-        
         const map = new Map({
             target: mapRef.current,
             layers: [
@@ -33,7 +22,7 @@ function MapComponent(props) {
 
                 new TileLayer({
                     source: new TileWMS({
-                        url: geoserverUrl,
+                        url: "/geoserver/prge_project/wms?",
                         params: {
                             'LAYERS': 'prge_project:Budynki_Warszawa',
                             'TILED': true,
@@ -48,7 +37,7 @@ function MapComponent(props) {
 
                 new TileLayer({
                     source: new TileWMS({
-                        url: geoserverUrl,
+                        url: "/geoserver/prge_project/wms?",
                         params: {
                             'LAYERS': 'prge_project:users',  // Zmień 'prge' na swój workspace
                             'TILED': true,
