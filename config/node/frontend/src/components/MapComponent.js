@@ -19,11 +19,15 @@ function MapComponent(props) {
               }),
                 //http://localhost:9000/geoserver/ne/wms?service=WMS&version=1.1.0&request=GetMap&layers=ne%3Aworld&bbox=-180.0%2C-90.0%2C180.0%2C90.0&width=768&height=384&srs=EPSG%3A4326&styles=&format=image%2Fjpeg
 
+
+
+
+
                 new TileLayer({
                     source: new TileWMS({
-                        url: "http://localhost:9000/geoserver/prge_project/wms?",
+                        url: "http://localhost:9000/geoserver/prge_proj/wms?",
                         params: {
-                            'LAYERS': 'prge_project:Budynki_Warszawa',
+                            'LAYERS': 'prge_proj:Budynki_Warszawa',
                             'TILED': true
                         },
                         serverType: 'geoserver',
@@ -32,9 +36,9 @@ function MapComponent(props) {
                 }),
                 new TileLayer({
                     source: new TileWMS({
-                        url: "http://localhost:9000/geoserver/prge_project/wms",
+                        url: "http://localhost:9000/geoserver/prge_proj/wms",
                         params: {
-                            'LAYERS': 'prge_project:users',  // Zmień 'prge' na swój workspace
+                            'LAYERS': 'prge_proj:users',  // Zmień 'prge' na swój workspace
                             'TILED': true
                         },
                         serverType: 'geoserver',
