@@ -30,6 +30,7 @@ function MapComponent(props) {
                         transition: 300
                     })
                 }),
+
                 new TileLayer({
                     source: new TileWMS({
                         url: "/geoserver/prge_project/wms",
