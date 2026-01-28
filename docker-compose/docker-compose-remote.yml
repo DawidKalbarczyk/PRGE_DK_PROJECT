@@ -50,6 +50,7 @@ services:
     ports:
       - ${FASTAPI_PORT}:10000
 
+
   nginx:
     build:
       context: ..
