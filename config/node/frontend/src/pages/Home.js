@@ -9,6 +9,7 @@ function Home(props) {
             <h1 className="home_title">GEOPORTAL</h1>
             <Typography className="home_subtitle">
 
+
                 TEST
 
             </Typography>
