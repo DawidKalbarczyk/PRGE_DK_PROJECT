@@ -19,6 +19,7 @@ function MapComponent(props) {
               }),
                 //http://localhost:9000/geoserver/ne/wms?service=WMS&version=1.1.0&request=GetMap&layers=ne%3Aworld&bbox=-180.0%2C-90.0%2C180.0%2C90.0&width=768&height=384&srs=EPSG%3A4326&styles=&format=image%2Fjpeg
 
+
                 new TileLayer({
                     source: new TileWMS({
                         url: "/geoserver/prge_project/wms?",
