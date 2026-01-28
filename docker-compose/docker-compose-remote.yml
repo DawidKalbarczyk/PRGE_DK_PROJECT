@@ -57,6 +57,8 @@ services:
 
 volumes:
   geoserver-data:
+    external: true
     name: prge_dk_project-geoserver-data
   postgis-remote-data:
+    external: true
     name: prge_dk_project-postgis-data
