@@ -6,6 +6,7 @@ COPY config/node/frontend/package-lock.json .
 RUN npm install
 COPY config/node/frontend .
 
+ENV PUBLIC_URL=""
 RUN npm run build
 
 
