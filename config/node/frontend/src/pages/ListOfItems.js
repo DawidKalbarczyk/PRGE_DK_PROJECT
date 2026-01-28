@@ -7,7 +7,7 @@ function ListOfItems(props) {
     const [users, setUsers] = useState([]); //Tworzenie hooka, który może przechowywać coś w pamięci
 
     useEffect(() => {
-        fetch('http://localhost:10000/app/get_users')
+        fetch('/app/get_users')
             .then(res => res.json())
             .then(res => {
                 console.log(res);
