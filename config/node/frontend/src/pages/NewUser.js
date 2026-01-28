@@ -6,6 +6,9 @@ function NewUser(props) {
     const [userLocation, setUserLocation] = useState("")
     const [userPosts, setUserPosts] = useState(0)
 
+
+
+
     const handleSubmit = async (e) => {
         console.log(userName, userLocation, userPosts)
         e.preventDefault();
