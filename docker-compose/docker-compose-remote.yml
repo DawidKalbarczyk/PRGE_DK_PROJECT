@@ -17,7 +17,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - /postgis-remote-data:/var/lib/postgresql/data
+      - postgis-remote-data:/var/lib/postgresql/data
 
 
   geoserver:
@@ -29,7 +29,7 @@ services:
     ports:
       - ${GEOSERVER_PORT}:8080
     volumes:
-      - ./geoserver-data:/opt/geoserver-data
+      - geoserver-data:/opt/geoserver-data
 
 
 
@@ -58,6 +58,5 @@ services:
 
 volumes:
   geoserver-data:
-    name: prge_dk_project-geoserver-data
+    name: prge_dk_project-geoserver-data-${ENV_NAME}
   postgis-remote-data:
-    name: prge_dk_project-postgis-data
