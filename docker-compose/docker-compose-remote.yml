@@ -54,6 +54,8 @@ services:
     build:
       context: ..
       dockerfile: docker/nginx/Dockerfile
+      args:
+        NGINX_PORT: ${NGINX_PORT}
     image: 'prge_dk_project_nginx'
     container_name: prge_dk_project_nginx-${ENV_NAME}
     ports:

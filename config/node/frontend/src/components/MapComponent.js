@@ -26,7 +26,7 @@ function MapComponent(props) {
                         params: {
                             'LAYERS': 'prge_project:Budynki_Warszawa',
                             'TILED': true,
-                            'VERSION': '^1.1.0'
+                            'VERSION': '1.1.0'
                         },
                         serverType: 'geoserver',
                         transition: 300,
@@ -40,7 +40,7 @@ function MapComponent(props) {
                         params: {
                             'LAYERS': 'prge_project:users',  // Zmień 'prge' na swój workspace
                             'TILED': true,
-                            'VERSION': '^1.1.0'
+                            'VERSION': '1.1.0'
                         },
                         serverType: 'geoserver',
                         transition: 300,
