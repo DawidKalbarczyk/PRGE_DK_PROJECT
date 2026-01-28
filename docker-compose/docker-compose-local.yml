@@ -95,6 +95,7 @@ services:
       - prge_dk_project_main_postgis-local-data:/to
 
 volumes:
+  postgis-local-data:
   postgis_dk_project_env-test_postgis-local-data:
   postgis_dk_project_env-dev_postgis-local-data:
   postgis_dk_project_env-qa_postgis-local-data:
