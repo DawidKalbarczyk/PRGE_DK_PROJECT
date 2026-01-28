@@ -6,11 +6,15 @@ function NewUser(props) {
     const [userLocation, setUserLocation] = useState("")
     const [userPosts, setUserPosts] = useState(0)
 
+
+
+
     const handleSubmit = async (e) => {
+        console.log("Wysyłam request do:", '/app/insert_user')
         console.log(userName, userLocation, userPosts)
         e.preventDefault();
         try {
-            const response = await fetch('http://localhost:10000/app/insert_user', {
+            const response = await fetch('/app/insert_user', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,7 +39,7 @@ function NewUser(props) {
                         style={{padding: 10}}
                         fullWidth
                         label="imie"
-                        value={userName.name}
+                        value={userName}
                         onChange={(e)=>setUserName(e.target.value)}
                     ></TextField>
                     <TextField

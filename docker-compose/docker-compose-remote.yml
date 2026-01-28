@@ -17,7 +17,7 @@ services:
     ports:
       - ${POSTGRES_PORT}:5432
     volumes:
-      - postgis-local-data:/var/lib/postgresql/data
+      - postgis-remote-data:/var/lib/postgresql/data
 
 
   geoserver:
@@ -30,6 +30,7 @@ services:
       - ${GEOSERVER_PORT}:8080
     volumes:
       - geoserver-data:/opt/geoserver-data
+
 
 
   fastapi:
@@ -54,36 +55,8 @@ services:
     ports:
       - ${NGINX_PORT}:80
 
-  dev-to-test:
-    image: alpine
-    profiles: ["copy"]
-    volumes:
-      - prge_dk_project_env-dev_postgis-local-data:/from:ro
-      - prge_dk_project_env-test_postgis-local-data:/to
-    command: sh -c "cp -a /from/. /to/"
-
-  test-to-qa:
-    image: alpine
-    profiles: ["copy"]
-    volumes:
-      - prge_dk_project_env-dev_postgis-local-data:/from:ro
-      - prge_dk_project_env-qa_postgis-local-data:/to
-    command: sh -c "cp -a /from/. /to/"
-
-  qa-to-main:
-    image: alpine
-    profiles: ["copy"]
-    volumes:
-      - prge_dk_project_env-qa_postgis-local-data:/from:ro
-      - prge_dk_project_main_postgis-local-data:/to
-    command: sh -c "cp -a /from/. /to/"
 
 volumes:
   geoserver-data:
-    name: prge_dk_project_${ENV_NAME}_geoserver-data
-  postgis-local-data:
-    name: prge_dk_project_${ENV_NAME}_postgis-local-data
-  prge_dk_project_env-test_postgis-local-data:
-  prge_dk_project_env-dev_postgis-local-data:
-  prge_dk_project_env-qa_postgis-local-data:
-  prge_dk_project_main_postgis-local-data:
+    name: prge_dk_project-geoserver-data-${ENV_NAME}
+  postgis-remote-data:
