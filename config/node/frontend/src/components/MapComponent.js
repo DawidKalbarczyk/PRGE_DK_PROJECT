@@ -34,6 +34,7 @@ function MapComponent(props) {
                     })
                 }),
 
+
                 new TileLayer({
                     source: new TileWMS({
                         url: "/geoserver/prge_project/wms",
