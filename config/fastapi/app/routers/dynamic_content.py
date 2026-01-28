@@ -14,7 +14,7 @@ async def get_users():
     try:
         db_connection = connect_to_db(db_name=db_name, db_user=db_user, db_password=db_password)
 
-        sql_query= text("""select *from users;""")
+        sql_query= text("""select * from users;""")
 
         with db_connection.connect() as conn:
             result = conn.execute(sql_query)
