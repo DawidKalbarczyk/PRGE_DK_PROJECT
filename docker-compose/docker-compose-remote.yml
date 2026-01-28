@@ -32,6 +32,7 @@ services:
       - geoserver-data:/opt/geoserver-data
 
 
+
   fastapi:
     build:
       context: ..
