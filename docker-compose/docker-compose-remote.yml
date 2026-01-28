@@ -19,16 +19,19 @@ services:
     volumes:
       - postgis-remote-data:/var/lib/postgresql/data
 
+
   geoserver:
     build:
       context: ..
       dockerfile: docker/geoserver/Dockerfile
     image: 'prge_dk_project_geoserver'
     container_name: prge_dk_project_geoserver-${ENV_NAME}
+    environment:
+      - GEOSERVER_DATA_DIR=/opt/geoserver-data
     ports:
       - ${GEOSERVER_PORT}:8080
     volumes:
-      - geoserver-remote-data:/var/lib/geoserver/data
+      - geoserver-data:/opt/geoserver-data
 
 
 
@@ -56,5 +59,5 @@ services:
 
 
 volumes:
-  geoserver-remote-data:
+  geoserver-data:
   postgis-remote-data:
