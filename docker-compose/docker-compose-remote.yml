@@ -10,6 +10,10 @@ services:
       dockerfile: docker/postgis/Dockerfile
     image: 'prge_dk_project_postgis'
     container_name: prge_dk_project_postgis-${ENV_NAME}
+    networks:
+      default:
+        aliases:
+          - postgis
     environment:
       - *env-postgres-db
       - *env-postgres-user
