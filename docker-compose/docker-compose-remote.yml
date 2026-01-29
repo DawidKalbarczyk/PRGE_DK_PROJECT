@@ -28,6 +28,7 @@ services:
     container_name: prge_dk_project_geoserver-${ENV_NAME}
     environment:
       - GEOSERVER_DATA_DIR=/opt/geoserver-data
+      - PROXY_BASE_URL=/geoserver
       - GEOSERVER_CSRF_WHITELIST=localhost
     ports:
       - ${GEOSERVER_PORT}:8080
