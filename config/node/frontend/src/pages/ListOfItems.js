@@ -4,7 +4,7 @@ import UserCard from "../components/UserCard";
 function ListOfItems(props) {
     //https://jsonplaceholder.typicode.com/users
     // UseEffect nasłuchuje jakąś rzecz i w przypadku jej zmiany wywołuje kod
-    const [users, setUsers] = useState([]); //Tworzenie hooka, który może przechowywać coś w pamięci
+    const [stores, setUsers] = useState([]); //Tworzenie hooka, który może przechowywać coś w pamięci
 
 
     useEffect(() => {
@@ -23,7 +23,7 @@ function ListOfItems(props) {
         <div>
             ListOfItems
             <div>
-                {users.data?.map(user => <UserCard user={user}/>)}
+                {stores.data?.map(store => <UserCard store={store}/>)}
             </div>
         </div>
     );

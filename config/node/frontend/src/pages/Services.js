@@ -25,7 +25,7 @@ function Services(props) {
                 variant="contained"
                 size="large"
                 component={Link}
-                to='/newuser'>Dodaj nowego użytkownika</Button>
+                to='/tableselection'>Dodaj nowego użytkownika</Button>
         </div>
     );
 }

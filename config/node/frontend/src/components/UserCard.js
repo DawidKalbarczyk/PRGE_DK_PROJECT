@@ -7,24 +7,24 @@ import Typography from '@mui/material/Typography';
 import {red} from '@mui/material/colors';
 
 
-function UserCard({user}) {
-    console.log('czym jest user: ', user)
+function UserCard({store}) {
+    console.log('czym jest user: ', store)
     return (
         <div  style={{padding: 10}}>
             <Card sx={{maxWidth: 345}}>
                 <CardHeader
                     avatar={
                         <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-                            {user.name[0]}
+                            {store.owner[0]}
                         </Avatar>
                     }
-                    title={user.name}
-                    subheader={user.location}
+                    title={store.owner}
+                    subheader={store.location}
                 />
 
                 <CardContent>
                     <Typography variant="body2" sx={{color: 'text.secondary'}}>
-                        Twój znajomy {user.name} opublikował {user.posts} postów.
+                        Twój znajomy {store.owner} opublikował {store.phoneNumber} postów.
                     </Typography>
                 </CardContent>
 
