@@ -25,7 +25,7 @@ function TableSelection(props) {
                                 variant="contained"
                                 size="medium"
                                 component={Link}
-                                sx={{backgroundColor: "#2c693f"}}
+                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
                                 to='/newrecord?table=employee'>Dodaj rekord do listy pracowników
                             </Button>
                           </CardContent>
@@ -44,6 +44,7 @@ function TableSelection(props) {
                                 variant="contained"
                                 size="medium"
                                 component={Link}
+                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
                                 to='/newrecord?table=deliveryman'>Dodaj rekord do listy dostawców
                             </Button>
                           </CardContent>
@@ -62,6 +63,7 @@ function TableSelection(props) {
                                 variant="contained"
                                 size="medium"
                                 component={Link}
+                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
                                 to='/newrecord?table=stores'>Dodaj rekord do listy sklepów
                             </Button>
                           </CardContent>

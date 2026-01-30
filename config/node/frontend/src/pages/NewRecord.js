@@ -6,6 +6,16 @@ function NewRecord(props) {
     const [searchParam] = useSearchParams();
     const table = searchParam.get('table')
     console.log("Tabela:", table)
+    switch (table) {
+        case "employee":
+            break;
+        case "deliveryman":
+            break;
+        case "stores":
+            break;
+        default:
+            console.log("Błąd w nazwie tabel")
+    }
 
     const [userName, setUserName] = useState("")
     const [userLocation, setUserLocation] = useState("")
