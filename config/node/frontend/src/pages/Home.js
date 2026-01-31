@@ -33,6 +33,13 @@ function Home(props) {
                     }}
                     component={Link}
                     to='services'>START</Button>
+                <div className="home-author-container">
+                    <p className="home-p-author">Wykonał:</p>
+                    <p className="home-p-author-desc">Dawid Kalbarczyk</p>
+                    <p className="home-p-author-desc">WIG23AX1S0</p>
+                    <p className="home-p-author-desc">Nr albumu: 85222</p>
+                </div>
+
             </div>
         </div>
     );

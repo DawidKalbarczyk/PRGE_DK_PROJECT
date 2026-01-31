@@ -37,3 +37,21 @@
 .home-image {
     width: 90%;
 }
+
+.home-author-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.home-p-author {
+    margin-top: 50px;
+    font-size: 28px;
+}
+
+.home-p-author-desc {
+    margin: 4px;
+    font-size: 20px;
+}
