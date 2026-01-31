@@ -2,6 +2,7 @@
   background: $background-color;
   color: $secondary-color;
   height: 100vh;
+  font-family: $font-family;
 
   @include flex-center;
 
