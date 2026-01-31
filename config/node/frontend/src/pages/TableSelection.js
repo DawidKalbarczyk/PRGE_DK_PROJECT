@@ -4,68 +4,110 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import {Link} from "react-router-dom";
 import {Container, Button} from "@mui/material";
-import {red} from "@mui/material/colors";
 
 
 function TableSelection(props) {
     return (
         <div>
-            <div style={{display: "grid", gridTemplateColumns: 'repeat(3, 1fr)', gap: '35px', marginTop: '-75px'}}>
+            <div style={{display: "grid", gridTemplateColumns: 'repeat(3, 1fr)', gap: '35px', marginTop: '-50px', justifyContent: 'center', alignItems: 'center'}}>
                     <Container>
-                        <Card sx={{ width: 500 }}>
+                        <Card sx={{ width: 450 }}>
                           <CardMedia
                             component="img"
-                            height="250"
+                            height="225"
                             image="/images/positive-hipster-entrepreneur-it-expert-software-developer.jpg"
                             alt="Pracownik"
+                            sx={{
+                                transition: 'filter 0.5s ease',
+                                '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                            }}
                           />
-                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                            <Button
+                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px'}}>
+                              <Button
                                 className="tableselection__button"
                                 variant="contained"
                                 size="medium"
                                 component={Link}
-                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
+                                sx={{
+                                    backgroundColor: "#2c693f",
+                                    fontSize: "18px",
+                                    textAlign: 'center',
+                                    transition: 'filter 0.5s ease',
+                                    '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                                    }}
                                 to='/newrecord?table=employee'>Dodaj rekord do listy pracowników
-                            </Button>
+                                </Button>
+
                           </CardContent>
                         </Card>
                     </Container>
-                    <Card sx={{ width: 500 }}>
+                    <Card sx={{ width: 450 }}>
                           <CardMedia
                             component="img"
-                            height="250"
+                            height="225"
                             image="/images/front-view-delivery-man-holding-box.jpg"
                             alt="Dostawca"
+                            sx={{
+                                transition: 'filter 0.5s ease',
+                                '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                            }}
                           />
-                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                            <Button
+                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px'}}>
+                              <Button
                                 className="tableselection__button"
                                 variant="contained"
                                 size="medium"
                                 component={Link}
-                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
+                                sx={{
+                                    backgroundColor: "#2c693f",
+                                    fontSize: "18px",
+                                    textAlign: 'center',
+                                    transition: 'filter 0.5s ease',
+                                    '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                              }}
                                 to='/newrecord?table=deliveryman'>Dodaj rekord do listy dostawców
-                            </Button>
+                                </Button>
                           </CardContent>
                     </Card>
 
-                    <Card sx={{ width: 500 }}>
+                    <Card sx={{ width: 450 }}>
                           <CardMedia
                             component="img"
-                            height="250"
+                            height="225"
                             image="/images/dark-stores-countdown.jpg"
                             alt="Sklep"
+                            sx={{
+                                transition: 'filter 0.5s ease',
+                                '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                            }}
                           />
-                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignContent: 'center'}}>
-                            <Button
+                          <CardContent sx={{display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '50px'}}>
+                              <Button
                                 className="tableselection__button"
                                 variant="contained"
                                 size="medium"
                                 component={Link}
-                                sx={{backgroundColor: "#2c693f", fontSize: "20px"}}
+                                sx={{
+                                    backgroundColor: "#2c693f",
+                                    fontSize: "18px",
+                                    textAlign: 'center',
+                                    transition: 'filter 0.5s ease',
+                                    '&:hover': {
+                                        filter: 'brightness(0.6)'
+                                    }
+                              }}
                                 to='/newrecord?table=stores'>Dodaj rekord do listy sklepów
-                            </Button>
+                                </Button>
                           </CardContent>
                     </Card>
 

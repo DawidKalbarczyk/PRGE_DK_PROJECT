@@ -25,7 +25,12 @@ function Home(props) {
                         width: '200px',
                         height: '80px',
                         fontSize: '32px',
-                        borderRadius: '16px'}}
+                        borderRadius: '16px',
+                        transition: 'background-color 1s ease',
+                        '&:hover': {
+                            backgroundColor: 'rgb(77, 76, 75)'
+                        }
+                    }}
                     component={Link}
                     to='services'>START</Button>
             </div>
