@@ -13,8 +13,8 @@ function TableSelection(props) {
     let names = []
     if (rootPage === 'list') {
         routing = [
-            '/list?table=employee',
-            '/list?table=deliveryman',
+            '/list?table=employees',
+            '/list?table=deliverymen',
             '/list?table=stores',
             '/list?table=deliveries',
 
@@ -29,8 +29,8 @@ function TableSelection(props) {
         //zmien tytuly przyciskow
     } else if (rootPage === 'newrecord') {
         routing  = [
-            '/newrecord?table=employee',
-            '/newrecord?table=deliveryman',
+            '/newrecord?table=employees',
+            '/newrecord?table=deliverymen',
             '/newrecord?table=stores',
             '/newrecord?table=deliveries'
         ]

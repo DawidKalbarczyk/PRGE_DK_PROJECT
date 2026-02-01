@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {Grid, Container, Box, TextField, Button, Paper} from '@mui/material';
+import {Grid, Box, TextField, Button, Paper} from '@mui/material';
 import {useSearchParams} from "react-router-dom";
 
 function NewRecord(props) {
@@ -7,9 +7,9 @@ function NewRecord(props) {
     const table = searchParam.get('table')
     console.log("Tabela:", table)
     switch (table) {
-        case "employee":
+        case "employees":
             break;
-        case "deliveryman":
+        case "deliverymen":
             break;
         case "stores":
             break;
