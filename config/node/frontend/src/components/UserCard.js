@@ -6,12 +6,33 @@ import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
 import {red} from '@mui/material/colors';
 
-
-function UserCard({table}) {
+// Get-Content deliveries.sql | docker exec -i prge_dk_project_postgis psql -U postgres -d postgres
+function UserCard({table, columnCount, columnNames}) {
     console.log('czym jest user: ', table)
+    console.log('Ilość w table:', columnCount)
+    console.log("kolumny:", columnNames)
+    // Odwołanie się poprzez columnNames[0] itd
+    function tableItems() {
+        return columnNames.map((col) => {
+           return (
+               <div key={col}>
+                   {table[col]}
+               </div>
+           )
+        });
+    }
+    console.log(tableItems())
     return (
-        <div  style={{padding: 10}}>
-            <Card sx={{maxWidth: 345}}>
+        <div>
+            <div className="user-card-item-container">
+              {tableItems()}
+            </div>
+
+
+
+
+
+            <Card sx={{width: "100%"}}>
                 <CardHeader
 
                     avatar={

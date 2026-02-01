@@ -8,7 +8,8 @@ function ListOfItems(props) {
     const [searchParams] = useSearchParams()
     const tableName = searchParams.get('table')
     const [param, setParam] = useState([]); //Tworzenie hooka, który może przechowywać coś w pamięci
-
+    const [columnCount, setColumnCount] = useState(0);
+    const [columnNames, setColumnNames] = useState([]);
 
     useEffect(() => {
         fetch(`/app/get_users?table=${tableName}`)
@@ -16,6 +17,10 @@ function ListOfItems(props) {
             .then(res => {
                 console.log(res);
                 setParam(res)
+                if (res.data && res.data.length > 0) {
+                    setColumnCount(Object.keys(res.data[0]).length);
+                    setColumnNames(Object.keys(res.data[0]));
+                }
             })
         // Pobiera dane ze źródła
     },[tableName])
@@ -29,8 +34,9 @@ function ListOfItems(props) {
                 </div>
             </div>
             <div className="list-of-items-container">
-
-                {param.data?.map(item => <UserCard key={item.id} table={item}/>)}
+                {param.data?.map(item =>
+                    <UserCard key={item.id} table={item} columnCount={columnCount} columnNames={columnNames}/>
+                )}
             </div>
         </div>
     );

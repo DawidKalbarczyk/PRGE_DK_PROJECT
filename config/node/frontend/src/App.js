@@ -2,6 +2,7 @@ import './styles/style.scss';
 import './styles/homePage.css';
 import './styles/services.css';
 import './styles/ListOfItems.css';
+import './styles/UserCard.css';
 import {Suspense} from "react";
 import routes from './routes/Router';
 import {RouterProvider} from 'react-router-dom';

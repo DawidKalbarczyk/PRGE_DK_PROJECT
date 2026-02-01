@@ -1,0 +1,11 @@
+.user-card-main-container {
+    border: 1px solid gray;
+    display: flex;
+    flex-direction: row;
+    background-color: gray;
+}
+
+.user-card-item-container {
+    display: flex;
+    flex-direction: row;
+}
