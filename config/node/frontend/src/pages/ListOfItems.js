@@ -22,11 +22,14 @@ function ListOfItems(props) {
 
     //Dodaj frontend generowany na bieżąco z postgres
     return (
-        <div>
-            <div className="list-of-items-container">
+        <div className="list-of-items-return-div">
+            <div className="list-of-items-title-container">
                 <div className="list-of-items-title">
                     Lista {tableName}
                 </div>
+            </div>
+            <div className="list-of-items-container">
+
                 {param.data?.map(item => <UserCard key={item.id} table={item}/>)}
             </div>
         </div>

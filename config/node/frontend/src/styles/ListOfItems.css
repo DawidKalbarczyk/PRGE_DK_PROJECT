@@ -1,0 +1,17 @@
+.list-of-items-return-div {
+    padding: 50px;
+}
+
+.list-of-items-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-content: center;
+}
+
+.list-of-items-title-container {
+    padding-bottom: 25px;
+}
+.list-of-items-title {
+    font-size: 24px;
+    color: white;
+}
