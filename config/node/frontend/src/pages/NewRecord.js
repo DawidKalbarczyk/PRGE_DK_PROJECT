@@ -1,145 +1,120 @@
 import React, {useState} from 'react';
-import {Grid, Box, TextField, Button, Paper} from '@mui/material';
+import {Grid, Box, Paper} from '@mui/material';
 import {useSearchParams} from "react-router-dom";
+import DeliverymanForm from '../components/forms/DeliverymanForm.js';
+import EmployeeForm from '../components/forms/EmployeeForm.js';
+import StoreForm from '../components/forms/StoreForm.js';
 
 function NewRecord(props) {
     const [searchParam] = useSearchParams();
     const table = searchParam.get('table')
     console.log("Tabela:", table)
-    switch (table) {
-        case "employees":
-            break;
-        case "deliverymen":
-            break;
-        case "stores":
-            break;
-        default:
-            console.log("Błąd w nazwie tabel")
-    }
 
-    const [userName, setUserName] = useState("")
-    const [userLocation, setUserLocation] = useState("")
-    const [userPosts, setUserPosts] = useState(0)
+    const [deliverymanData, setDeliverymanData] = useState({
+        name: "",
+        location: "",
+        phoneNumber: "",
+        salary: 0,
+        workedHours: 0,
+        store: 0
+    });
+    const [employeeData, setEmployeeData] = useState({
+        name: "",
+        location: "",
+        age: 0,
+        phoneNumber: "",
+        salary: 0,
+        position: "",
+        workedHours: 0,
+        store: 0
+    });
+    const [storeData, setStoreData] = useState({
+        owner: "",
+        location: "",
+        employeesNr: 0,
+        phoneNumber: ""
+    });
 
 
 
 
     const handleSubmit = async (e) => {
-        console.log("Wysyłam request do:", '/app/insert_user')
-        console.log(userName, userLocation, userPosts)
+        console.log("Wysyłam request do:", `/app/insert_user?table=${table}`)
         e.preventDefault();
+        let dataToSend = {};
+
+        switch (table) {
+            case "deliverymen":
+                dataToSend = { deliveryman: deliverymanData}
+                break;
+            case "employees":
+                dataToSend = { employee: employeeData}
+                break;
+            case "stores":
+                dataToSend = { store: storeData}
+                break;
+            default:
+                console.log("Błąd w nazwie tabel")
+                return
+        }
+        console.log("Dane do wysłania:", dataToSend);
         try {
-            const response = await fetch('/app/insert_user', {
+            const response = await fetch(`/app/insert_user?table=${table}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({
-                    name: userName,
-                    location: userLocation,
-                    posts: userPosts
-                })
+                body: JSON.stringify(dataToSend)
             })
-            console.log(response)
+
+            const data = await response.json();
+            if (data.status === 1) {
+                alert("Rekord dodany pomyślnie.");
+
+                switch (table) {
+                    case "deliverymen":
+                        setDeliverymanData({name: "", location: "", phoneNumber: "", salary: 0, workedHours: 0, store: 0});
+                        break;
+                    case "employees":
+                        setEmployeeData({name: "", location: "", age: 0, phoneNumber: "", salary: 0, position: "", workedHours: 0, store: 0});
+                        break;
+                    case "stores":
+                        setStoreData({owner: "", location: "", employeesNr: 0, phoneNumber: ""});
+                        break;
+                    default:
+                        console.log("Błąd w ładowaniu formularza.")
+                        return
+                }
+            }
         } catch(e) {
-            console.log(e)
+            console.log("Błąd:",e);
+            console.log("Błąd podczas dodawania rekordu.")
         }
     }
+
+    const renderForm = () => {
+        switch (table) {
+            case "deliverymen":
+                return <DeliverymanForm data={deliverymanData} setData={setDeliverymanData} onSubmit={handleSubmit}/>;
+            case "employees":
+                return <EmployeeForm data={employeeData} setData={setEmployeeData} onSubmit={handleSubmit}/>;
+            case "stores":
+                return <StoreForm data={storeData} setData={setStoreData} onSubmit={handleSubmit}/>;
+            default:
+                console.log("Błąd w renderowaniu formularza.")
+        }
+    };
     return (
         <div>
             <Grid container spacing={2} direction="column">
                 <Grid item>
                     <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
                         <Paper elevation={3} sx={{p: 4}}>
-                            <Box component="form" onSubmit={handleSubmit} sx={{display: 'block'}}>
-                                <TextField
-                                    style={{padding: 10}}
-                                    label="imie"
-                                    value={userName}
-                                    onChange={(e)=>setUserName(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="location"
-                                    value={userLocation}
-                                    onChange={(e) => setUserLocation(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="posts"
-                                    value={userPosts}
-                                    onChange={(e) => setUserPosts(e.target.value)}
-                                ></TextField>
-                                <Button type="submit" variant="contained">Dodaj użytkownika</Button>
-                            </Box>
-                        </Paper>
-                    </Box>
-                </Grid>
-
-                <Grid item>
-                    <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
-                        <Paper elevation={3} sx={{p: 4}}>
-                            <Box component="form" onSubmit={handleSubmit}>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="imie"
-                                    value={userName}
-                                    onChange={(e)=>setUserName(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="location"
-                                    value={userLocation}
-                                    onChange={(e) => setUserLocation(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="posts"
-                                    value={userPosts}
-                                    onChange={(e) => setUserPosts(e.target.value)}
-                                ></TextField>
-                                <Button type="submit" variant="contained">Dodaj użytkownika</Button>
-                            </Box>
-                        </Paper>
-                    </Box>
-                </Grid>
-                <Grid item>
-                    <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
-                        <Paper elevation={3} sx={{p: 4}}>
-                            <Box component="form" onSubmit={handleSubmit}>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="imie"
-                                    value={userName}
-                                    onChange={(e)=>setUserName(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="location"
-                                    value={userLocation}
-                                    onChange={(e) => setUserLocation(e.target.value)}
-                                ></TextField>
-                                <TextField
-                                    style={{padding: 10}}
-
-                                    label="posts"
-                                    value={userPosts}
-                                    onChange={(e) => setUserPosts(e.target.value)}
-                                ></TextField>
-                                <Button type="submit" variant="contained">Dodaj użytkownika</Button>
-                            </Box>
+                            {renderForm()}
                         </Paper>
                     </Box>
                 </Grid>
             </Grid>
-
         </div>
     )
 }
