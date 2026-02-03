@@ -11,7 +11,8 @@ function UserCard({table, columnCount, columnNames}) {
     console.log('czym jest user: ', table)
     console.log('Ilość w table:', columnCount)
     console.log("kolumny:", columnNames)
-    // Odwołanie się poprzez columnNames[0] itd
+
+
     function tableItems() {
         return columnNames.map((col) => {
            return (
