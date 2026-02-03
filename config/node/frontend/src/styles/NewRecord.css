@@ -1,0 +1,16 @@
+.new-record-main-container {
+    display: grid;
+    grid-template-rows: 1fr;
+    align-items: center;
+    justify-content: center;
+}
+
+.new-record-title-container {
+    font-size: 36px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 100px;
+}
+.new-record-content-container {
+
+}

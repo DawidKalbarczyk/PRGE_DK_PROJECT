@@ -1,0 +1,57 @@
+.home {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 50px;
+    padding: 50px;
+}
+
+.home-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.home-title {
+    font-size: 48px;
+    color: white;
+    display: block;
+}
+
+.home-title-1st {
+    color: gray;
+}
+
+.home-description {
+    display: block;
+    font-size: 32px;
+}
+.home-button {
+    background-color: gray;
+    color: white;
+    display: block;
+    width: 100px;
+    height: 40px;
+    border-radius: 8px;
+}
+.home-image {
+    width: 90%;
+}
+
+.home-author-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.home-p-author {
+    margin-top: 50px;
+    font-size: 28px;
+}
+
+.home-p-author-desc {
+    margin: 4px;
+    font-size: 20px;
+}

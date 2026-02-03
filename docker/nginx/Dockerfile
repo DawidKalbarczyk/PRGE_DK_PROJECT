@@ -1,10 +1,14 @@
 FROM node:24 AS build
 WORKDIR /app
 
+ARG NGINX_PORT
+ENV REACT_APP_PORT=${NGINX_PORT}
+ENV PUBLIC_URL=""
 COPY config/node/frontend/package.json .
 COPY config/node/frontend/package-lock.json .
 RUN npm install
 COPY config/node/frontend .
+
 
 RUN npm run build
 

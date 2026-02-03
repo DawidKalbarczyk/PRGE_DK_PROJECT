@@ -18,6 +18,10 @@ services:
       - ${POSTGRES_PORT}:5432
     volumes:
       - postgis-remote-data:/var/lib/postgresql/data
+    networks:
+      default:
+        aliases:
+          - postgis
 
 
   geoserver:
@@ -28,6 +32,8 @@ services:
     container_name: prge_dk_project_geoserver-${ENV_NAME}
     environment:
       - GEOSERVER_DATA_DIR=/opt/geoserver-data
+      - PROXY_BASE_URL=/geoserver
+      - GEOSERVER_CSRF_WHITELIST=localhost
     ports:
       - ${GEOSERVER_PORT}:8080
     volumes:
@@ -48,10 +54,13 @@ services:
     ports:
       - ${FASTAPI_PORT}:10000
 
+
   nginx:
     build:
       context: ..
       dockerfile: docker/nginx/Dockerfile
+      args:
+        NGINX_PORT: ${NGINX_PORT}
     image: 'prge_dk_project_nginx'
     container_name: prge_dk_project_nginx-${ENV_NAME}
     ports:

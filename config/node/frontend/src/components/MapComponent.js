@@ -1,4 +1,4 @@
-import {React, useRef, useEffect} from 'react';
+import {React, useRef, useEffect, useState} from 'react';
 import Map from "ol/Map";
 import TileLayer from "ol/layer/Tile";
 import OSM from "ol/source/OSM";
@@ -9,54 +9,87 @@ import {TileWMS} from 'ol/source';
 
 function MapComponent(props) {
     const mapRef = useRef(null);
+    const layersRef = useRef({});
+    const [layers, setLayers] = useState({
+        osm: true,
+        deliverymen: true,
+        stores: true
+    });
+    
+    useGeographic();
     useGeographic();
     useEffect(() => {
+        const osmLayer = new TileLayer({
+            source: new OSM(),
+        });
+        
+        const deliverymenLayer = new TileLayer({
+            source: new TileWMS({
+                url: "/geoserver/prge_project/wms?",
+                params: {
+                    'LAYERS': 'prge_project:deliverymen',
+                    'TILED': true,
+                    'VERSION': '1.1.0'
+                },
+                serverType: 'geoserver',
+                transition: 300,
+                crossOrigin: 'anonymous'
+            })
+        });
+        
+        const storesLayer = new TileLayer({
+            source: new TileWMS({
+                url: "/geoserver/prge_project/wms?",
+                params: {
+                    'LAYERS': 'prge_project:stores',
+                    'TILED': true,
+                    'VERSION': '1.1.0'
+                },
+                serverType: 'geoserver',
+                transition: 300,
+                crossOrigin: 'anonymous'
+            })
+        });
+        
+        layersRef.current = { osm: osmLayer, deliverymen: deliverymenLayer, stores: storesLayer };
+        
         const map = new Map({
             target: mapRef.current,
-            layers: [
-              new TileLayer({
-                  source: new OSM(),
-              }),
-                //http://localhost:9000/geoserver/ne/wms?service=WMS&version=1.1.0&request=GetMap&layers=ne%3Aworld&bbox=-180.0%2C-90.0%2C180.0%2C90.0&width=768&height=384&srs=EPSG%3A4326&styles=&format=image%2Fjpeg
-
-
-                new TileLayer({
-                    source: new TileWMS({
-                        url: "/geoserver/prge_project/wms?",
-                        params: {
-                            'LAYERS': 'prge_project:Budynki_Warszawa',
-                            'TILED': true
-                        },
-                        serverType: 'geoserver',
-                        transition: 300
-                    })
-                }),
-
-                new TileLayer({
-                    source: new TileWMS({
-                        url: "/geoserver/prge_project/wms",
-                        params: {
-                            'LAYERS': 'prge_project:users',  // Zmień 'prge' na swój workspace
-                            'TILED': true
-                        },
-                        serverType: 'geoserver',
-                        transition: 300
-                    })
-                })
-            ],
+            layers: [osmLayer, deliverymenLayer, storesLayer],
             view: new View({
                 center: [21, 52],
                 zoom: 6
             })
         });
         return () => map.setTarget(null);
-    }, [] ) ;  // Referencja która odświeża po zmianie wartości w [user]
+    }, [] ) ;
 
+    const toggleLayer = (layerName) => {
+        setLayers(prev => {
+            const newState = {...prev, [layerName]: !prev[layerName]};
+            if (layersRef.current[layerName]) {
+                layersRef.current[layerName].setVisible(newState[layerName]);
+            }
+            return newState;
+        });
+    };
 
     return (
-
-
-        <div className="mapComponent" ref={mapRef}></div>
+        <div className="map-component-main-container">
+            <div className="mapComponent" ref={mapRef}></div>
+            <div className="map-component-layer-container">
+                <div className="map-component-layer-title">Warstwy</div>
+                <label className="map-component-layer-label">
+                    <input type="checkbox" checked={layers.osm} onChange={() => toggleLayer('osm')} /> OSM
+                </label>
+                <label className="map-component-layer-label">
+                    <input type="checkbox" checked={layers.deliverymen} onChange={() => toggleLayer('deliverymen')} /> Dostawcy
+                </label>
+                <label className="map-component-layer-label">
+                    <input type="checkbox" checked={layers.stores} onChange={() => toggleLayer('stores')} /> Sklepy
+                </label>
+            </div>
+        </div>
     );
 }
 
