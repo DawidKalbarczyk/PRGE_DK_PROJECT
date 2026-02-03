@@ -1,11 +1,37 @@
+.user-card-container {
+    border-radius: 16px;
+}
+
 .user-card-main-container {
-    border: 1px solid gray;
     display: flex;
     flex-direction: row;
     background-color: gray;
+    border: 2px solid black;
+    font-weight: bold;
+    font-size: 20px;
 }
 
 .user-card-item-container {
+    padding: 12px 32px 12px 32px;
+    border-right: 2px solid black;
+    flex: 1;
+    text-align: center;
+    min-width: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-card-item-container:last-child {
+    border-right: none;
+}
+
+.user-card-data-container {
     display: flex;
     flex-direction: row;
+    background-color: #959595;
+    border: 2px solid black;
+    overflow-wrap: break-word;
+    word-break: break-all;
+    border-top: 0px;
 }

@@ -1,7 +1,7 @@
 .app {
   background: $background-color;
   color: $secondary-color;
-  height: 100vh;
+  min-height: 100vh;
   font-family: $font-family;
 
   @include flex-center;

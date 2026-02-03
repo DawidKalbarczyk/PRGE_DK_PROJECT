@@ -34,8 +34,8 @@ function ListOfItems(props) {
                 </div>
             </div>
             <div className="list-of-items-container">
-                {param.data?.map(item =>
-                    <UserCard key={item.id} table={item} columnCount={columnCount} columnNames={columnNames}/>
+                {param.data?.map((item, index) =>
+                    <UserCard key={item.id} table={item} columnCount={columnCount} columnNames={columnNames} isFirstRow={index===0}/>
                 )}
             </div>
         </div>

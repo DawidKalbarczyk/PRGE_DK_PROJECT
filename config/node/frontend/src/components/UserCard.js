@@ -1,22 +1,46 @@
 import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardHeader from '@mui/material/CardHeader';
-import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
-import Typography from '@mui/material/Typography';
-import {red} from '@mui/material/colors';
+
+const translations = {
+    id: "ID",
+    date: "Data",
+    geom: "Geometria Hex",
+    locationfrom: "Skąd",
+    locationto: "Dokąd",
+    deliveryman: "Dostawca",
+    distance: "Dystans",
+    name: "Nazwisko",
+    location: "Lokalizacja",
+    phonenumber: "Nr. telefonu",
+    salary: "Wypłata",
+    workedhours: "Godziny pracy",
+    store: "Sklep",
+    age: "Wiek",
+    position: "Stanowisko",
+    employeesnr: "Pracownicy",
+    owner: "Właściciel"
+}
 
 // Get-Content deliveries.sql | docker exec -i prge_dk_project_postgis psql -U postgres -d postgres
-function UserCard({table, columnCount, columnNames}) {
+function UserCard({table, columnCount, columnNames, isFirstRow}) {
     console.log('czym jest user: ', table)
     console.log('Ilość w table:', columnCount)
     console.log("kolumny:", columnNames)
+    // Odwołanie się poprzez columnNames[0] itd
 
-
-    function tableItems() {
+    function columnNamesFunc() {
         return columnNames.map((col) => {
+            return (
+                <div key={col} className="user-card-item-container">
+                    {translations[col]}
+                </div>
+            )
+
+        });
+    }
+    function tableItems() {
+        return columnNames.map((col, index) => {
            return (
-               <div key={col}>
+               <div key={col} className="user-card-item-container">
                    {table[col]}
                </div>
            )
@@ -24,35 +48,16 @@ function UserCard({table, columnCount, columnNames}) {
     }
     console.log(tableItems())
     return (
-        <div>
-            <div className="user-card-item-container">
+        <div className="user-card-container">
+            {isFirstRow && (
+                <div className="user-card-main-container">
+                    {columnNamesFunc()}
+                </div>
+            )}
+
+            <div className="user-card-data-container">
               {tableItems()}
             </div>
-
-
-
-
-
-            <Card sx={{width: "100%"}}>
-                <CardHeader
-
-                    avatar={
-                        <Avatar sx={{bgcolor: red[500]}} aria-label="recipe">
-                            {table.deliveryman}
-                        </Avatar>
-                    }
-                    title={table.id}
-                    subheader={table.locationFrom}
-                />
-
-                <CardContent>
-                    <Typography variant="body2" sx={{color: 'text.secondary'}}>
-                        Twój znajomy {table.locationTo} opublikował {table.phoneNumber} postów.
-                    </Typography>
-                </CardContent>
-
-
-            </Card>
         </div>
     );
 }
