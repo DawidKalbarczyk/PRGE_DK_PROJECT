@@ -1,5 +1,5 @@
 import React from 'react';
-import {Button, Container} from "@mui/material";
+import {Button} from "@mui/material";
 import {Link} from "react-router-dom";
 import Card from "@mui/material/Card";
 import CardMedia from "@mui/material/CardMedia";
