@@ -1,0 +1,34 @@
+.services-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: -100px;
+    margin-bottom: 80px;
+}
+
+.services-title {
+    font-size: 48px;
+    color: white;
+    display: block;
+}
+
+.services-title-1st {
+    color: gray;
+}
+
+.services-content-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    column-gap: 35px;
+    justify-content: center;
+    align-items: center;
+    margin: 16px;
+}
+
+.services-description-container {
+    display: flex;
+}
+
+.services-description-title {
+    font-size: 18px;
+}
