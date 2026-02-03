@@ -17,15 +17,18 @@ function MapComponent(props) {
     });
     
     useGeographic();
-    useGeographic();
     useEffect(() => {
+        // Użyj pełnego URL z origin zamiast względnego
+        const baseUrl = `${window.location.origin}/geoserver/prge_project/wms?`;
+        console.log('GeoServer URL:', baseUrl);
+        
         const osmLayer = new TileLayer({
             source: new OSM(),
         });
         
         const deliverymenLayer = new TileLayer({
             source: new TileWMS({
-                url: "/geoserver/prge_project/wms?",
+                url: baseUrl,
                 params: {
                     'LAYERS': 'prge_project:deliverymen',
                     'TILED': true,
@@ -39,7 +42,7 @@ function MapComponent(props) {
         
         const storesLayer = new TileLayer({
             source: new TileWMS({
-                url: "/geoserver/prge_project/wms?",
+                url: baseUrl,
                 params: {
                     'LAYERS': 'prge_project:stores',
                     'TILED': true,
