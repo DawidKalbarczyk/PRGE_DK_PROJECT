@@ -13,7 +13,8 @@ function MapComponent(props) {
     const [layers, setLayers] = useState({
         osm: true,
         deliverymen: true,
-        stores: true
+        stores: true,
+        employees: true
     });
     
     useGeographic();
@@ -37,7 +38,8 @@ function MapComponent(props) {
                 serverType: 'geoserver',
                 transition: 300,
                 crossOrigin: 'anonymous'
-            })
+            }),
+            visible: true
         });
         
         const storesLayer = new TileLayer({
@@ -51,19 +53,41 @@ function MapComponent(props) {
                 serverType: 'geoserver',
                 transition: 300,
                 crossOrigin: 'anonymous'
-            })
+            }),
+            visible: true
+        });
+
+        const employeesLayer = new TileLayer({
+            source: new TileWMS({
+                url: baseUrl,
+                params: {
+                    'LAYERS': 'prge_project:employees',
+                    'TILED': true,
+                    'VERSION': '1.1.0'
+                },
+                serverType: 'geoserver',
+                transition: 300,
+                crossOrigin: 'anonymous'
+            }),
+            visible: true
         });
         
-        layersRef.current = { osm: osmLayer, deliverymen: deliverymenLayer, stores: storesLayer };
+        console.log('Warstwy utworzone:', { deliverymenLayer, storesLayer, employeesLayer});
+        
+        layersRef.current = { osm: osmLayer, deliverymen: deliverymenLayer, stores: storesLayer, employees: employeesLayer};
         
         const map = new Map({
             target: mapRef.current,
-            layers: [osmLayer, deliverymenLayer, storesLayer],
+            layers: [osmLayer, deliverymenLayer, storesLayer, employeesLayer],
             view: new View({
                 center: [21, 52],
                 zoom: 6
             })
         });
+        
+
+        console.log('Mapa utworzona z warstwami:', map.getLayers().getArray().length);
+        
         return () => map.setTarget(null);
     }, [] ) ;
 
@@ -90,6 +114,9 @@ function MapComponent(props) {
                 </label>
                 <label className="map-component-layer-label">
                     <input type="checkbox" checked={layers.stores} onChange={() => toggleLayer('stores')} /> Sklepy
+                </label>
+                <label className="map-component-layer-label">
+                    <input type="checkbox" checked={layers.employees} onChange={() => toggleLayer('employees')} /> Pracownicy
                 </label>
             </div>
         </div>
