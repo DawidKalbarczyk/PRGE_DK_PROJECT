@@ -4,6 +4,7 @@ import {useSearchParams} from "react-router-dom";
 import DeliverymanForm from '../components/forms/DeliverymanForm.js';
 import EmployeeForm from '../components/forms/EmployeeForm.js';
 import StoreForm from '../components/forms/StoreForm.js';
+import DeliveriesForm from '../components/forms/DeliveriesForm.js';
 
 function NewRecord(props) {
     const [searchParam] = useSearchParams();
@@ -34,6 +35,13 @@ function NewRecord(props) {
         employeesNr: 0,
         phoneNumber: ""
     });
+    const [deliveriesData, setDeliveriesData] = useState({
+        date: "",
+        locationFrom: "",
+        locationTo: "",
+        deliveryman: 0,
+        distance: 0
+    });
 
 
 
@@ -53,6 +61,9 @@ function NewRecord(props) {
             case "stores":
                 dataToSend = { store: storeData}
                 break;
+            case "deliveries":
+                dataToSend = { delivery: deliveriesData}
+                break;
             default:
                 console.log("Błąd w nazwie tabel")
                 return
@@ -65,11 +76,29 @@ function NewRecord(props) {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(dataToSend)
-            })
+            });
+
+            console.log("Response status:", response.status);
+            
+            if (!response.ok) {
+                let errorMsg = `Błąd ${response.status}`;
+                try {
+                    const errorData = await response.json();
+                    errorMsg = errorData.detail || errorMsg;
+                } catch (jsonErr) {
+                    const textError = await response.text();
+                    console.error("Odpowiedź serwera (text):", textError);
+                    errorMsg = `Błąd serwera: ${response.status}`;
+                }
+                alert(errorMsg);
+                return;
+            }
 
             const data = await response.json();
+            console.log("Otrzymane dane:", data);
+            
             if (data.status === 1) {
-                alert("Rekord dodany pomyślnie.");
+                alert("Rekord dodany pomyślnie!");
 
                 switch (table) {
                     case "deliverymen":
@@ -81,14 +110,17 @@ function NewRecord(props) {
                     case "stores":
                         setStoreData({owner: "", location: "", employeesNr: 0, phoneNumber: ""});
                         break;
+                    case "deliveries":
+                        setDeliveriesData({date: "", locationFrom: "", locationTo: "", deliveryman: 0, distance: 0});
+                        break;
                     default:
                         console.log("Błąd w ładowaniu formularza.")
                         return
                 }
             }
-        } catch(e) {
-            console.log("Błąd:",e);
-            console.log("Błąd podczas dodawania rekordu.")
+        } catch(error) {
+            console.error("Błąd catch:", error);
+            alert(`Błąd podczas komunikacji z serwerem: ${error.message}`);
         }
     }
 
@@ -100,21 +132,20 @@ function NewRecord(props) {
                 return <EmployeeForm data={employeeData} setData={setEmployeeData} onSubmit={handleSubmit}/>;
             case "stores":
                 return <StoreForm data={storeData} setData={setStoreData} onSubmit={handleSubmit}/>;
+            case "deliveries":
+                return <DeliveriesForm data={deliveriesData} setData={setDeliveriesData} onSubmit={handleSubmit}/>;
             default:
                 console.log("Błąd w renderowaniu formularza.")
         }
     };
     return (
-        <div>
-            <Grid container spacing={2} direction="column">
-                <Grid item>
-                    <Box sx={{ maxWidth: 'lg', mx: 'auto' }}>
-                        <Paper elevation={3} sx={{p: 4}}>
-                            {renderForm()}
-                        </Paper>
-                    </Box>
-                </Grid>
-            </Grid>
+        <div className="new-record-main-container">
+            <div className="new-record-title-container">
+                Formularz {table}
+            </div>
+            <div className="new-record-content-container">
+                {renderForm()}
+            </div>
         </div>
     )
 }

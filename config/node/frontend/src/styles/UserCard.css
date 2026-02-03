@@ -7,7 +7,6 @@
     flex-direction: row;
     background-color: gray;
     border: 2px solid black;
-    border-bottom: 0px;
     font-weight: bold;
     font-size: 20px;
 }
@@ -34,5 +33,5 @@
     border: 2px solid black;
     overflow-wrap: break-word;
     word-break: break-all;
-    border-bottom: 0px;
+    border-top: 0px;
 }
