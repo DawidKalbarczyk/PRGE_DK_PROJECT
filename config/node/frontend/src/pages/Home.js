@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {Typography, Button} from "@mui/material";
+import {Button} from "@mui/material";
 import {Link} from "react-router-dom";
 
 function Home(props) {
