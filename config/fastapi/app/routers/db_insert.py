@@ -187,6 +187,7 @@ async def insert_user(
                                 VALUES (:name, ST_GeomFromText('POINT({longitude} {latitude})', 4326), :location, :age, :phonenumber,\
                                 :salary, :position, :workedhours, :store);
                                 """)
+
             case "stores":
                 params = {
                     "owner": store.owner,
